@@ -1,31 +1,31 @@
 spring:
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username:
-    password:
-    protocol: smtp
+    host: smtp.gmail.com    #Define o servidor SMTP usado para enviar emails. Nesse caso, o servidor do Gmail.
+    port: 587   #Porta de conexão com o servidor SMTP. A 587 é a porta padrão para envio com STARTTLS (conexão segura).
+    username:           #Credenciais da conta de email que vai enviar as mensagens
+    password:           #Credenciais da conta de email que vai enviar as mensagens
+    protocol: smtp    #Define o protocolo de envio de email como SMTP.
     properties:
       mail:
         smtp:
           socketFactory:
             port: 465
-            class: javax.net.ssl.SSLSocketFactory
-            fallback: false
-          auth: true
+            class: javax.net.ssl.SSLSocketFactory   #Define a fábrica de sockets SSL do Java para criar conexões seguras criptografadas.
+            fallback: false   #Desabilita o fallback para conexão não-segura. Se o SSL falhar, a conexão é encerrada em vez de tentar sem segurança.
+          auth: true      #Exige autenticação (usuário e senha) para conectar ao servidor SMTP.
           starttls:
-            enable: true
-          connectiontimeout: 5000
-          timeout: 3000
-          writetimeout: 5000
+            enable: true    #Habilita o STARTTLS, que faz upgrade da conexão comum para uma conexão criptografada TLS após a conexão inicial na porta 587.
+          connectiontimeout: 5000   #Tempo máximo (em ms) para estabelecer a conexão com o servidor SMTP
+          timeout: 3000       #Tempo máximo (em ms) para aguardar resposta do servidor durante a comunicação
+          writetimeout: 5000    #Tempo máximo (em ms) para escrever dados (enviar o email) ao servidor
 
   thymeleaf:
-    enable: true
+    enable: true   #Habilita o Thymeleaf como motor de templates. Permite processar os arquivos .html em resources/templates.
 
 envio:
   email:
-    remetente:
-    nomeRemetente: 'Tarefa Pendente'
+    remetente:    #Endereço de email do remetente. É lida no EmailService via @Value("${envio.email.remetente}").
+    nomeRemetente: 'Tarefa Pendente'    #Nome de exibição do remetente que aparecerá no email recebido. Lido via @Value("${envio.email.nomeRemetente}").
 
 server:
-  port: 8082
+  port: 8082    #Define que a aplicação Spring Boot vai rodar na porta 8082 em vez da porta padrão 8080.
