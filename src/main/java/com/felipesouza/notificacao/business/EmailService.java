@@ -18,6 +18,7 @@ import org.thymeleaf.context.Context;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.time.format.DateTimeFormatter;
 
 @Service    //Indica ao spring que é uma Service
 @RequiredArgsConstructor    //Gera um construtor que inicializa apenas os campos PRIVATE FINAL
@@ -59,7 +60,10 @@ public class EmailService {
             //Cria o contexto do Thymeleaf e injeta as variáveis dinâmicas que serão substituídas no template HTML
             Context context = new Context();
             context.setVariable("nomeTarefa", dto.getNomeTarefa());
-            context.setVariable("dataAgendamento", dto.getDataAgendamento());
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+            context.setVariable("dataAgendamento", dto.getDataAgendamento().format(formatter));
             context.setVariable("descricao", dto.getDescricao());
 
             //Processa o arquivo notificacao.html substituindo as variáveis pelo contexto, gerando o HTML final do email.
